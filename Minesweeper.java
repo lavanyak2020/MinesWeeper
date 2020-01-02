@@ -11,8 +11,7 @@ public class Minesweeper {
         while(!mineField.isAllFreeMinesExplored()){
             String input = getUserInput();
             char command = input.charAt(0);
-            Coordinate point = new Coordinate(Integer.parseInt(input.substring(2,input.indexOf(","))),
-                    Integer.parseInt(input.substring(input.indexOf(",")+1,input.indexOf(")"))));
+            Coordinate point = parseInput(input);
             if(!mineField.exploreCell(point,command)){
                 mineField.printMineField(point);
                 win = false;
@@ -32,6 +31,10 @@ public class Minesweeper {
         Scanner scan = new Scanner(System.in);
         System.out.print("Enter option:");
         return scan.nextLine();
+    }
+    private Coordinate parseInput(String string){
+        return new Coordinate(Integer.parseInt(string.substring(2,string.indexOf(","))),
+                Integer.parseInt(string.substring(string.indexOf(",")+1,string.indexOf(")"))));
     }
 
     private void initializeMineField(){
