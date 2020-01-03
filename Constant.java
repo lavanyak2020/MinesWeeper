@@ -1,6 +1,6 @@
 public interface Constant {
-    char open = 'o';
-    char flag = 'f';
-    char mine = 'm';
-    char notExplore = 'X';
+    char OPEN = 'o';
+    char FLAG = 'f';
+    char MINE = 'm';
+    char NOTEXPLORE = 'X';
 }

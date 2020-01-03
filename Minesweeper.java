@@ -8,10 +8,13 @@ public class Minesweeper {
 
     public void startGame(){
         boolean win = true;
-        while(!mineField.isAllFreeMinesExplored()){
+        while(!mineField.isGameEnd()){
             String input = getUserInput();
             char command = input.charAt(0);
             Coordinate point = parseInput(input);
+            if(isAlreadyDone(point,command)){
+                continue;
+            }
             if(!mineField.exploreCell(point,command)){
                 mineField.printMineField(point);
                 win = false;
@@ -24,6 +27,19 @@ public class Minesweeper {
         }else{
             System.out.println("Wow, you cleared the minefield ! Game Over !");
         }
+
+    }
+
+    private boolean isAlreadyDone(Coordinate point, char command) {
+        if(mineField.isExplored(point,command)){
+            if(command == Constant.OPEN){
+                System.out.println("You have already opened the cell");
+            }else{
+                System.out.println("You have already flagged the cell");
+            }
+            return true;
+        }
+        return false;
 
     }
 

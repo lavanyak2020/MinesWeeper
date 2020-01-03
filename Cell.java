@@ -3,7 +3,7 @@ public class Cell {
     private char status;
     Cell(Mine mine){
         this.mine = mine;
-        status = Constant.notExplore;
+        status = Constant.NOTEXPLORE;
     }
     public boolean checkStatus(char status){
         if(this.status == status){
@@ -11,7 +11,7 @@ public class Cell {
         }
         return false;
     }
-    public boolean isMinePresent(){
+    public boolean isMine(){
         if(mine != null){
             return true;
         }

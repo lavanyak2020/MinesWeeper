@@ -12,26 +12,40 @@ public class MineField {
     int getSize(){
         return size;
     }
-    public boolean isAllFreeMinesExplored(){
+    public boolean isGameEnd(){
         for(int cellXIndx = 0; cellXIndx < size; cellXIndx++){
             for(int cellYIndx = 0; cellYIndx < size; cellYIndx++){
-                if(!isMine(new Coordinate(cellXIndx,cellYIndx)) && !cells[cellXIndx][cellYIndx].checkStatus(Constant.open)){
-                    return false;
+                if(cells[cellXIndx][cellYIndx].isMine()){
+                    if(!cells[cellXIndx][cellYIndx].checkStatus(Constant.FLAG)){
+                        return false;
+                    }
                 }
+                else{
+                    if(!cells[cellXIndx][cellYIndx].checkStatus(Constant.OPEN)){
+                        return false;
+                    }
+                }
+
             }
         }
         return true;
     }
-    private boolean isMine(Coordinate point){
 
-        return cells[point.getX()][point.getY()].isMinePresent();
-    }
     public boolean exploreCell(Coordinate point,char command){
-        if(command == Constant.open && isMine(point)){
+        if(command == Constant.OPEN && cells[point.getX()][point.getY()].isMine()){
             return false;
         }
         cells[point.getX()][point.getY()].setStatus(command);
         return true;
+    }
+    public boolean isExplored(Coordinate point,char command){
+        if(cells[point.getX()][point.getY()].checkStatus(Constant.FLAG) && command == Constant.FLAG){
+                return true;
+        }
+        if(cells[point.getX()][point.getY()].checkStatus(Constant.OPEN) && command == Constant.OPEN){
+                return true;
+        }
+        return false;
     }
     public void printMineField(){
         for(int cellXIndx = 0; cellXIndx < size ; cellXIndx++){
@@ -48,7 +62,7 @@ public class MineField {
         for(int cellXIndx = 0; cellXIndx < size ; cellXIndx++){
             for(int cellYIndx = 0; cellYIndx < size ; cellYIndx++){
                 if(point.equals(new Coordinate(cellXIndx,cellYIndx))){
-                    System.out.print(Constant.mine);
+                    System.out.print(Constant.MINE);
                 }else {
                         System.out.print(cells[cellXIndx][cellYIndx].getStatus());
                 }
@@ -61,7 +75,7 @@ public class MineField {
         Cell cell;
         for(String field: mineField){
             for(int charIndx = 0,cellYIndx=0; charIndx < size ; charIndx++){
-                if(field.charAt(charIndx) == Constant.mine){
+                if(field.charAt(charIndx) == Constant.MINE){
                     cell = new Cell(new Mine());
                 }
                 else {
